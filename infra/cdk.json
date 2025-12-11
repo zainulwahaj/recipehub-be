@@ -1,0 +1,7 @@
+{
+  "app": "npx ts-node bin/recipehub-infra.ts",
+  "context": {
+    "@aws-cdk/aws-lambda:recognizeVersionProps": true,
+    "@aws-cdk/core:newStyleStackSynthesis": true
+  }
+}
