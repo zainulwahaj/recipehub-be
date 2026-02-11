@@ -15,8 +15,7 @@ new RecipehubStack(app, "RecipehubBackendStack", {
     account: process.env.CDK_DEFAULT_ACCOUNT,
     region: process.env.CDK_DEFAULT_REGION || "us-east-1",
   },
-  // Pass env vars to the stack
-  databaseUrl: process.env.DATABASE_URL!,
+  // Pass env vars to the stack (DATABASE_URL now managed by CDK/RDS)
   secretKey: process.env.SECRET_KEY!,
   openaiApiKey: process.env.OPENAI_API_KEY!,
 });
