@@ -1,0 +1,33 @@
+services:
+  db:
+    image: mysql:8.0
+    restart: unless-stopped
+    environment:
+      MYSQL_DATABASE: recipehub
+      MYSQL_USER: recipehub_user
+      MYSQL_PASSWORD: yourpassword
+      MYSQL_ROOT_PASSWORD: rootpassword
+    ports:
+      - "3306:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      interval: 10s
+      retries: 5
+      start_period: 30s
+
+  api:
+    build: .
+    restart: unless-stopped
+    ports:
+      - "8000:8000"
+    env_file: .env
+    environment:
+      DATABASE_URL: mysql+pymysql://recipehub_user:yourpassword@db:3306/recipehub
+    depends_on:
+      db:
+        condition: service_healthy
+
+volumes:
+  mysql_data:

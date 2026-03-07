@@ -1,13 +1,16 @@
-FROM public.ecr.aws/lambda/python:3.11
+FROM python:3.11-slim
+
+WORKDIR /app
 
 # Copy requirements first for better caching
-COPY requirements.txt ${LAMBDA_TASK_ROOT}/
+COPY requirements.txt .
 
 # Install dependencies
 RUN pip install --no-cache-dir -r requirements.txt
 
 # Copy app code
-COPY app/ ${LAMBDA_TASK_ROOT}/app/
+COPY app/ ./app/
 
-# Set the handler
-CMD ["app.main.handler"]
+EXPOSE 8000
+
+CMD ["uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "8000"]

@@ -18,9 +18,9 @@ class User(Base):
     __tablename__ = "users"
 
     id = Column(Integer, primary_key=True, index=True)
-    name = Column(String, nullable=False)
-    email = Column(String, unique=True, nullable=False, index=True)
-    password_hash = Column(String, nullable=False)
+    name = Column(String(255), nullable=False)
+    email = Column(String(255), unique=True, nullable=False, index=True)
+    password_hash = Column(String(255), nullable=False)
     user_type = Column(String(20), default=UserType.REGULAR.value, nullable=False)
     created_at = Column(DateTime(timezone=True), server_default=func.now())
 
@@ -29,14 +29,14 @@ class Recipe(Base):
 
     id = Column(Integer, primary_key=True, index=True)
     user_id = Column(Integer, ForeignKey("users.id"), nullable=False)
-    title = Column(String, nullable=False)
-    description = Column(String, nullable=False)
+    title = Column(String(255), nullable=False)
+    description = Column(String(2000), nullable=False)
     ingredients = Column(JSON, nullable=False)
     steps = Column(JSON, nullable=False)
     time_minutes = Column(Integer, nullable=False)
-    difficulty = Column(String, nullable=False)
+    difficulty = Column(String(50), nullable=False)
     tags = Column(JSON, nullable=True)
-    source = Column(String, nullable=False)
+    source = Column(String(50), nullable=False)
     is_public = Column(Boolean, default=True)
     avg_rating = Column(Numeric(precision=3, scale=2), nullable=True)
     created_at = Column(DateTime(timezone=True), server_default=func.now())
@@ -66,7 +66,7 @@ class AIRequest(Base):
 
     id = Column(Integer, primary_key=True, index=True)
     user_id = Column(Integer, ForeignKey("users.id"), nullable=False)
-    model = Column(String, nullable=False)
+    model = Column(String(100), nullable=False)
     prompt_tokens = Column(Integer, nullable=True)
     completion_tokens = Column(Integer, nullable=True)
     created_at = Column(DateTime(timezone=True), server_default=func.now())
