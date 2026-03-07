@@ -29,8 +29,8 @@ lambda_package/
 !requirements.txt
 .env
 *.zip
-alembic/
-*.ini
+!alembic/
+!alembic.ini
 deploy.sh
 recipehub.service
 trust-policy.json
